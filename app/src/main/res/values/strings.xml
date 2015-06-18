@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">FeedMe Now</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="main_logo">The main logo on the Home screen</string>
+    <string name="ingredient">Ingredient</string>
+</resources>

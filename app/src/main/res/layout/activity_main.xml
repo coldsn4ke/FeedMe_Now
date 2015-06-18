@@ -1,0 +1,67 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
+    android:id="@+id/home_screen">
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/Home_Logo"
+        android:id="@+id/home_logo"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/feedme_now"
+        android:contentDescription="@string/main_logo" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search"
+        android:id="@+id/serach_btn"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        android:id="@+id/add_ing"
+        android:onClick="test"
+        android:nestedScrollingEnabled="false"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/home_logo"
+        android:layout_centerHorizontal="true" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView"
+        android:layout_below="@+id/home_logo"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/serach_btn">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_above="@+id/serach_btn"
+            android:layout_below="@+id/home_logo"
+            android:id="@+id/ing_list">
+
+        </LinearLayout>
+    </ScrollView>
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ing0"
+        android:hint="@string/ingredient"
+        android:inputType="text"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
+
+
+</RelativeLayout>
