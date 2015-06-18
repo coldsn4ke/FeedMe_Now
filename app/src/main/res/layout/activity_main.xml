@@ -38,9 +38,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/scrollView"
-        android:layout_below="@+id/home_logo"
         android:layout_alignParentEnd="true"
-        android:layout_above="@+id/serach_btn">
+        android:layout_above="@+id/serach_btn"
+        android:layout_below="@+id/add_ing">
 
         <LinearLayout
             android:orientation="vertical"
@@ -51,17 +51,16 @@
             android:layout_below="@+id/home_logo"
             android:id="@+id/ing_list">
 
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ing0"
+                android:hint="@string/ingredient"
+                android:inputType="text"
+                android:layout_below="@+id/add_ing"
+                android:layout_alignParentStart="true" />
         </LinearLayout>
     </ScrollView>
-
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/ing0"
-        android:hint="@string/ingredient"
-        android:inputType="text"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>
