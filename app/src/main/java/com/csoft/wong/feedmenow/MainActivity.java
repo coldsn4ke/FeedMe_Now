@@ -14,9 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
 
+import java.util.HashMap;
 import java.util.ArrayList;
 
 
@@ -27,6 +26,7 @@ public class MainActivity extends ActionBarActivity {
     private EditText edit;
     private int count;
     private int resID;
+    private APIBinder apiBinder;
     private EditText ingredient;
 
     @Override
@@ -37,7 +37,8 @@ public class MainActivity extends ActionBarActivity {
         add_ing = (Button) findViewById(R.id.add_ing);
         edit = (EditText) findViewById(R.id.ing0);
         count = 0;
-
+        this.apiBinder = new APILoader();
+        HashMap<String, HashMap<String, String>> allResult = this.apiBinder.getAll("http://www.recipepuppy.com/api/?i=onion,garlic&p=3");
     }
 
 
