@@ -1,19 +1,17 @@
 package com.csoft.wong.feedmenow;
 
-import android.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
+
+import java.util.HashMap;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -23,6 +21,7 @@ public class MainActivity extends ActionBarActivity {
     private  EditText edit;
     private int count;
     private int resID;
+    private APIBinder apiBinder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +31,8 @@ public class MainActivity extends ActionBarActivity {
         add_ing = (Button) findViewById(R.id.add_ing);
         edit = (EditText) findViewById(R.id.ing0);
         count = 0;
-
+        this.apiBinder = new APILoader();
+        HashMap<String, HashMap<String, String>> allResult = this.apiBinder.getAll("http://www.recipepuppy.com/api/?i=onion,garlic&p=3");
     }
 
 
