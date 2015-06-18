@@ -1,6 +1,8 @@
 package com.csoft.wong.feedmenow;
 
 import android.os.AsyncTask;
+import android.app.ActionBar;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.InputType;
@@ -8,22 +10,26 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import java.util.HashMap;
+import java.util.ArrayList;
 
 
 public class MainActivity extends ActionBarActivity {
 
     private RelativeLayout mLayout;
     private Button add_ing;
-    private  EditText edit;
+    private EditText edit;
     private int count;
     private int resID;
     private APIBinder apiBinder;
+    private EditText ingredient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,13 +67,26 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    public void test(View v) {
+    public void addEdit(View v) {
         mLayout.addView(addText());
         RelativeLayout.LayoutParams lparams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         lparams.addRule(RelativeLayout.BELOW, resID + count);
         add_ing.setLayoutParams(lparams);
     }
 
+    public void search(View v){
+        ArrayList ing_list = new ArrayList();
+        for (int i = 0; i < mLayout.getChildCount(); i++) {
+            if (mLayout.getChildAt(i) instanceof EditText) {
+                ingredient = (EditText) mLayout.getChildAt(i);
+                ing_list.add(ingredient.getText().toString());
+            }
+        }
+        Intent intent;
+        intent = new Intent(getApplicationContext(), Recipe_Activity.class);
+        intent.putStringArrayListExtra("ingredients", ing_list);
+        startActivity(intent);
+    }
 
     private EditText addText() {
         if(count==0){
@@ -83,6 +102,7 @@ public class MainActivity extends ActionBarActivity {
         editText.setId(resID + count);
         editText.setInputType(InputType.TYPE_CLASS_TEXT);
         editText.setHint("Ingredient");
+        editText.setMaxLines(1);
 
         return editText;
     }
