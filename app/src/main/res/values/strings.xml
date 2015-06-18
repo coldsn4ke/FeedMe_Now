@@ -5,4 +5,6 @@
     <string name="action_settings">Settings</string>
     <string name="main_logo">The main logo on the Home screen</string>
     <string name="ingredient">Ingredient</string>
+    <string name="search">Search</string>
+    <string name="add">+</string>
 </resources>

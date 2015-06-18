@@ -16,7 +16,7 @@ import java.util.HashMap;
 
 public class MainActivity extends ActionBarActivity {
 
-    private LinearLayout mLayout;
+    private RelativeLayout mLayout;
     private Button add_ing;
     private  EditText edit;
     private int count;
@@ -27,7 +27,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mLayout = (LinearLayout) findViewById(R.id.ing_list);
+        mLayout = (RelativeLayout) findViewById(R.id.ing_list);
         add_ing = (Button) findViewById(R.id.add_ing);
         edit = (EditText) findViewById(R.id.ing0);
         count = 0;
@@ -38,6 +38,9 @@ public class MainActivity extends ActionBarActivity {
 
     public void test(View v) {
         mLayout.addView(addText());
+        RelativeLayout.LayoutParams lparams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        lparams.addRule(RelativeLayout.BELOW, resID + count);
+        add_ing.setLayoutParams(lparams);
     }
 
 
