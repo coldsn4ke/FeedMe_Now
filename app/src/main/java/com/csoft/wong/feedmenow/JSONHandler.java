@@ -17,29 +17,37 @@ import java.util.List;
 public class JSONHandler {
     private static final String TAG = "JSONHandler";
 
+    public JSONHandler(){};
+
     public HashMap<String, HashMap<String, String>> parseJson(String jsonstring){
 
         HashMap<String, HashMap<String, String>> resultMap = new HashMap<String, HashMap<String, String>>();
 
         try {
-            JSONArray jsonArr = new JSONArray(jsonstring);
+            JSONObject jsonObj = new JSONObject(jsonstring);
 
-            if (!jsonArr.getJSONObject(3).getString("result").equals("[]"))
-            {
-                JSONObject title = jsonArr.getJSONObject(0);
-                JSONObject version = jsonArr.getJSONObject(1);
-                JSONObject href = jsonArr.getJSONObject(2);
-                JSONObject result = jsonArr.getJSONObject(3);
+            //if (!jsonObj.getString("result").equals("[]"))
+            //{
 
                 HashMap header = new HashMap<String, String>();
-                header.put("title", title.getString("title"));
-                header.put("version", version.getString("version"));
-                header.put("href", href.getString("href"));
+                header.put("title", jsonObj.getString("title"));
+                header.put("version", jsonObj.getString("version"));
+                header.put("href", jsonObj.getString("href"));
+                resultMap.put("header", header);
+
+                JSONArray resultArr = jsonObj.getJSONArray("results");
 
 
+                for (int i=0; i < resultArr.length(); i++){
+                    HashMap subResultMap = new HashMap<String, String>();
+                    subResultMap.put("title", resultArr.getJSONObject(i).get("title"));
+                    subResultMap.put("resultHref", resultArr.getJSONObject(i).get("href"));
+                    subResultMap.put("ingredients", resultArr.getJSONObject(i).get("ingredients"));
+                    subResultMap.put("thumbnail", resultArr.getJSONObject(i).get("thumbnail"));
+                    resultMap.put(Integer.toString(i), subResultMap);
+                }
 
-
-                Iterator keys = result.keys();
+                /*Iterator keys = resultArr.keys();
                 int resultID = 0;
 
                 if (keys.hasNext()) {
@@ -54,7 +62,7 @@ public class JSONHandler {
                         String ingredients = subObj.getString("ingredients");
                         String thumbnail = subObj.getString("thumbnail");
 
-                        subResultMap.put("title", resultTitle);
+                        subResultMap.put("title", key);
                         subResultMap.put("resultHref", resultHref);
                         subResultMap.put("ingredients", ingredients);
                         subResultMap.put("thumbnail", thumbnail);
@@ -65,19 +73,14 @@ public class JSONHandler {
                     HashMap<String, String> errorMap = new HashMap<String, String>();
                     errorMap.put("error","Keine Resultate gefunden!");
                     resultMap.put("error",errorMap);
-                }
-
-
-
-                resultMap.put("header", header);
-            };
+                }*/
 
 
 
 
-            for (int i = 1; i < jsonArr.length(); i++){
-                JSONObject jsonsubObj = jsonArr.getJSONObject(i);
-            }
+
+            //}
+            ;
 
 
 
