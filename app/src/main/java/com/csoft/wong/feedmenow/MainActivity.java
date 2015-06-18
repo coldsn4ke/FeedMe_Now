@@ -39,31 +39,6 @@ public class MainActivity extends ActionBarActivity {
         add_ing = (Button) findViewById(R.id.add_ing);
         edit = (EditText) findViewById(R.id.ing0);
         count = 0;
-        APIBinder apiBinder = new APILoader();
-
-
-
-        String url = "http://www.recipepuppy.com/api/?i=onion,garlic&p=3";
-        new AsyncTask<String, String, String>(){
-            @Override
-            protected String doInBackground(String... badi) {
-                APIBinder apiBinder = new APILoader();
-                HashMap<String, HashMap<String, String>> allResults = apiBinder.getAll("http://www.recipepuppy.com/api/?i=onion,garlic&p=3");
-                try {
-                    Log.v("allResults", allResults.get("header").get("title"));
-                } catch (Exception e){
-                    Log.v("allResults", "DIDN'T WORK!");
-                }
-                return allResults.get("header").get("title");
-            }
-
-            protected void onPostExecute(String result) {
-
-            }
-
-        }.execute(url);
-
-
     }
 
 
@@ -82,10 +57,43 @@ public class MainActivity extends ActionBarActivity {
                 ing_list.add(ingredient.getText().toString());
             }
         }
-        Intent intent;
-        intent = new Intent(getApplicationContext(), Recipe_Activity.class);
-        intent.putStringArrayListExtra("ingredients", ing_list);
-        startActivity(intent);
+
+        /*
+        This Subclass calls an activity to choose
+         */
+        String url = "http://www.recipepuppy.com/api/?i=";
+        for (int i = 0; i < ing_list.size(); i++){
+            url += ing_list.get(i).toString();
+        }
+        url += "&p=3";
+
+        new AsyncTask<String, String, String>(){
+            @Override
+            protected String doInBackground(String... url) {
+                APIBinder apiBinder = new APILoader();
+                String jsonstring = apiBinder.readUrl(url[0]);
+                return jsonstring;
+            }
+
+            protected void onPostExecute(String jsonstring) {
+                HashMap<String, HashMap<String, String>> allResults = apiBinder.parseJson(jsonstring);
+
+                ArrayList ing_list = new ArrayList();
+                for (int i = 0; i < allResults.size()-1;i++){
+                    ing_list.add(allResults.get(i).get("title"));
+                }
+
+
+                Intent intent;
+                intent = new Intent(getApplicationContext(), Recipe_Activity.class);
+                intent.putStringArrayListExtra("ingredients", ing_list);
+                startActivity(intent);
+            }
+
+        }.execute(url);
+
+
+
     }
 
     private EditText addText() {

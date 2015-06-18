@@ -5,29 +5,19 @@ import java.util.HashMap;
 
 public class APILoader implements APIBinder {
     URLHandler urlHandler;
+    JSONHandler jsonHandler;
 
     public APILoader(){
         this.urlHandler = new URLHandler();
+        this.jsonHandler = new JSONHandler();
     }
 
-    public HashMap<String, HashMap<String, String>> getAll(String url)
-    {
-        HashMap<String, HashMap<String, String>> returnMap = new HashMap<String, HashMap<String, String>>();
-        returnMap = (this.urlHandler.getResult(url));
-        return returnMap;
-    };
+    public String readUrl(String url){
+        return this.urlHandler.readUrl(url);
+    }
 
-
-    public HashMap<String, String> getById()
-    {
-        HashMap<String, String> map1 = new HashMap<String, String>();
-        map1.put("","");
-        return map1;
-    };
-
-
-
-
-
+    public HashMap<String, HashMap<String, String>> parseJson(String jsonstring){
+        return this.jsonHandler.parseJson(jsonstring);
+    }
 
 }
