@@ -12,6 +12,12 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
+
+
 import java.util.ArrayList;
 
 
@@ -22,6 +28,10 @@ public class Recipe_Activity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
+        ImageLoader.getInstance().init(config);
+
         setContentView(R.layout.activity_recipe_);
         ListView list = (ListView) findViewById(R.id.recipe_list);
         Intent intent = getIntent();
@@ -33,7 +43,8 @@ public class Recipe_Activity extends ActionBarActivity {
         TextView titleView = (TextView) findViewById(R.id.recipe_name);
         titleView.setText(title);
         ImageView thumbnailView = (ImageView) findViewById(R.id.recipe_img);
-
+        ImageLoader imageLoader = ImageLoader.getInstance();
+        imageLoader.displayImage(thumbnail, thumbnailView);
 
         ArrayAdapter ing_list = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, ingredients);
         list.setAdapter(ing_list);
