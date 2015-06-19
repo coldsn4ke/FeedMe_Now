@@ -7,8 +7,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -23,8 +25,17 @@ public class Recipe_Activity extends ActionBarActivity {
         setContentView(R.layout.activity_recipe_);
         ListView list = (ListView) findViewById(R.id.recipe_list);
         Intent intent = getIntent();
-        ArrayList string_list = intent.getStringArrayListExtra("ingredients");
-        ArrayAdapter ing_list = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, string_list);
+        String title = intent.getStringExtra("title");
+        String[] ingredients = intent.getStringArrayExtra("ingredients");
+        String thumbnail = intent.getStringExtra("thumbnail");
+        String href = intent.getStringExtra("href");
+        //ArrayList string_list = intent.getStringArrayListExtra("ingredients");
+        TextView titleView = (TextView) findViewById(R.id.recipe_name);
+        titleView.setText(title);
+        ImageView thumbnailView = (ImageView) findViewById(R.id.recipe_img);
+
+
+        ArrayAdapter ing_list = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, ingredients);
         list.setAdapter(ing_list);
     }
 

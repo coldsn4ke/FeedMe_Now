@@ -9,50 +9,50 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.HashMap;
+
 
 public class URLHandler {
-    private JSONHandler jsonHandler;
     private static final String TAG = "URLHandler";
 
-    public URLHandler(){
-        jsonHandler = new JSONHandler();
+    public URLHandler(){}
+
+    public String readUrl(String url){
+        String urlResult = "";
+        try {
+            urlResult = readContents(url);
+        } catch (Exception e) {
+            Log.v(TAG, e.toString());
+        }
+        return urlResult;
     }
 
-    private void getResult(String url){
+    private String readContents(String address) throws Exception
+    {
+        StringBuilder contents = new StringBuilder(2048);
+        BufferedReader br = null;
 
-        new AsyncTask<String, String, String>(){
-
-            @Override
-            protected String doInBackground(String... urlResult) {
-                String msg = "";
-
-
-                //TODO May be more than one result
-                HttpGet get = new HttpGet(urlResult[0]);
-
-                DefaultHttpClient client = new DefaultHttpClient();
-
-                try {
-                    HttpResponse response = client.execute(get);
-
-                    int code = response.getStatusLine().getStatusCode();
-
-                    msg = EntityUtils.toString(response.getEntity());
-
-                    Log.i(TAG, Integer.toString(code));
-
-                } catch (Exception e) {
-                    Log.v(TAG, e.toString());
-                }
-                //Log.v(TAG, "\nTHIS IS THE MESSAGE RETURNED: " + msg);
-                return msg;
-
+        try
+        {
+            URL url = new URL(address);
+            br = new BufferedReader(new InputStreamReader(url.openStream()));
+            String line = "";
+            while (line != null)
+            {
+                line = br.readLine();
+                contents.append(line);
             }
-
-            protected void onPostExecute(String result) {
-                jsonHandler.parseJson(result);
+        }
+        finally
+        {
+            if (!(br == null)){
+                br.close();
             }
-        }.execute(url);
+        }
 
+        return contents.toString();
     }
 }
