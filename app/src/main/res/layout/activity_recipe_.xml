@@ -9,9 +9,8 @@
     <ImageView
         android:layout_width="@android:dimen/thumbnail_width"
         android:layout_height="@android:dimen/thumbnail_height"
-        android:id="@+id/imageView"
+        android:id="@+id/recipe_img"
         android:src="@drawable/no_image"
-        android:layout_marginTop="73dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
@@ -21,16 +20,19 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Chili Con Carne"
         android:id="@+id/recipe_name"
-        android:layout_centerVertical="true"
+        android:textStyle="bold"
+        android:layout_below="@+id/recipe_img"
         android:layout_alignParentStart="true"
-        android:textStyle="bold" />
+        android:maxLength="35"
+        android:maxLines="1"
+        android:singleLine="true"/>
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/recipe_list"
-        android:layout_below="@+id/recipe_name"
         android:layout_alignParentStart="true"
+        android:layout_below="@+id/recipe_name"
         android:layout_above="@+id/open_link" />
 
     <Button
