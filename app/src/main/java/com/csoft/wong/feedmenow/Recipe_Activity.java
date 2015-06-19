@@ -39,7 +39,6 @@ public class Recipe_Activity extends ActionBarActivity {
         String[] ingredients = intent.getStringArrayExtra("ingredients");
         String thumbnail = intent.getStringExtra("thumbnail");
         String href = intent.getStringExtra("href");
-        //ArrayList string_list = intent.getStringArrayListExtra("ingredients");
         TextView titleView = (TextView) findViewById(R.id.recipe_name);
         titleView.setText(title);
         ImageView thumbnailView = (ImageView) findViewById(R.id.recipe_img);
