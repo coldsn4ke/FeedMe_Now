@@ -90,7 +90,7 @@ public class MainActivity extends ActionBarActivity {
                 intent = new Intent(getApplicationContext(), Recipe_Activity.class);
                 //intent.putStringArrayListExtra("ingredients", ing_list);
                 intent.putExtra("title", allResults.get(Integer.toString(0)).get("title"));
-                intent.putExtra("ingredients", allResults.get(Integer.toString(0)).get("ingredients").split(","));
+                intent.putExtra("ingredients", allResults.get(Integer.toString(0)).get("ingredients").split(", "));
                 intent.putExtra("thumbnail", allResults.get(Integer.toString(0)).get("thumbnail"));
                 intent.putExtra("href", allResults.get(Integer.toString(0)).get("resultHref"));
                 startActivity(intent);
