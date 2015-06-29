@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Vector;
 
 
 /*
@@ -48,6 +49,7 @@ public class MainActivity extends ActionBarActivity {
         add_ing = (Button) findViewById(R.id.add_ing);
         edit = (EditText) findViewById(R.id.ing0);
         count = 0;
+        apiBinder = new APILoader();
     }
 
 
@@ -67,20 +69,10 @@ public class MainActivity extends ActionBarActivity {
             }
         }
 
-        String url = "http://api.bigoven.com/recipe/1185708?api_key=dvx9vaCumPhsRn5nALtmp5wO196Av1f3";
-        /*String url = "http://www.recipepuppy.com/api/?i=";
-        for (int i = 0; i < ing_list.size(); i++){
-            if (i == 0) {
-                url += ing_list.get(i).toString();
-            } else {
-                url += "," + ing_list.get(i).toString();
-            }
-        }*/
-
         Intent intent;
         intent = new Intent(getApplicationContext(), Recipe_Activity.class);
-        readURLAsyncTask urlAsyncTask = new readURLAsyncTask(intent, this);
-        urlAsyncTask.execute(url);
+        readSearchURLAsyncTask searchURLAsyncTask = new readSearchURLAsyncTask(intent, this, ing_list);
+        searchURLAsyncTask.execute();
 
     }
 

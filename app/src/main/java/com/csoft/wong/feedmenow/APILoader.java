@@ -2,6 +2,7 @@ package com.csoft.wong.feedmenow;
 
 
 import java.util.HashMap;
+import java.util.Vector;
 
 public class APILoader implements APIBinder {
     URLHandler urlHandler;
@@ -24,6 +25,10 @@ public class APILoader implements APIBinder {
 
     public HashMap<String, HashMap<String, String>> parseXml(String xmlstring){
         return this.xmlHandler.parseXml(xmlstring);
+    }
+
+    public Vector<String> parseSearchXml(String xmlstring){
+        return this.xmlHandler.parseSearchXml(xmlstring);
     }
 
 }
