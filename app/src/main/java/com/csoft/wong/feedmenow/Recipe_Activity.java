@@ -58,10 +58,10 @@ public class Recipe_Activity extends ActionBarActivity {
         titleView.setText(title);
         thumbnailView = (ImageView) findViewById(R.id.recipe_img);
 
-        if(thumbnail != ""){
-            ImageLoader imageLoader = ImageLoader.getInstance();
-            imageLoader.displayImage(thumbnail, thumbnailView);
-        }
+
+        ImageLoader imageLoader = ImageLoader.getInstance();
+        imageLoader.displayImage(thumbnail, thumbnailView);
+
 
         searchArray = intent.getStringArrayListExtra("RecipeIDs");
 
@@ -116,7 +116,7 @@ public class Recipe_Activity extends ActionBarActivity {
                     // Left to Right swipe action
                     if (x2 > x1)
                     {
-                        Toast.makeText(this, "Left to Right swipe [Next]", Toast.LENGTH_SHORT).show ();
+                        Toast.makeText(this, "Loading next recipe...", Toast.LENGTH_SHORT).show ();
                         new ReloadAsyncTask(thumbnailView,list,titleView,searchArray,counter,this).execute();
                         counter++;
                     }
