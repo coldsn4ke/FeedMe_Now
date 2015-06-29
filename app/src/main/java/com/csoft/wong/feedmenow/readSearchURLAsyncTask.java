@@ -2,6 +2,7 @@ package com.csoft.wong.feedmenow;
 
 import android.app.AlertDialog;
 import android.app.DialogFragment;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,12 +17,14 @@ public class readSearchURLAsyncTask extends AsyncTask<String, String, String>{
     private APIBinder apiBinder;
     private ArrayList ing_list;
     private ArrayList<String> searchArray;
+    private ProgressDialog dialog;
 
-    public readSearchURLAsyncTask(Intent intent, Context context, ArrayList ing_list){
+    public readSearchURLAsyncTask(Intent intent, Context context, ArrayList ing_list, ProgressDialog dialog){
         this.context = context;
         this.intent = intent;
         this.apiBinder = new APILoader();
         this.ing_list = ing_list;
+        this.dialog = dialog;
     }
 
     @Override
@@ -50,8 +53,10 @@ public class readSearchURLAsyncTask extends AsyncTask<String, String, String>{
     }
 
     protected void onPostExecute(String recipeUrl) {
+        dialog.dismiss();
         if (recipeUrl != "error") {
-            readURLAsyncTask readURLAT = new readURLAsyncTask(this.intent, this.context, this.searchArray);
+            dialog.show();
+            readURLAsyncTask readURLAT = new readURLAsyncTask(this.intent, this.context, this.searchArray, dialog);
             readURLAT.execute(recipeUrl);
         } else {
             new AlertDialog.Builder(context)

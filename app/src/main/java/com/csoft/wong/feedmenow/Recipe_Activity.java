@@ -1,5 +1,6 @@
 package com.csoft.wong.feedmenow;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
@@ -116,8 +117,9 @@ public class Recipe_Activity extends ActionBarActivity {
                     // Left to Right swipe action
                     if (x2 > x1)
                     {
-                        Toast.makeText(this, "Loading next recipe...", Toast.LENGTH_SHORT).show ();
-                        new ReloadAsyncTask(thumbnailView,list,titleView,searchArray,counter,this).execute();
+                        ProgressDialog dialog = ProgressDialog.show(this, "Loading", "Please wait...");
+                        dialog.show();
+                        new ReloadAsyncTask(thumbnailView,list,titleView,searchArray,counter,this,dialog).execute();
                         counter++;
                     }
 

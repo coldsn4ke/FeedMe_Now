@@ -1,5 +1,6 @@
 package com.csoft.wong.feedmenow;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.ArrayAdapter;
@@ -28,15 +29,20 @@ public class ReloadAsyncTask extends AsyncTask<String,String,String> {
     private Context context;
     private APIBinder apiBinder;
     private HashMap<String, HashMap<String, String>> allResults;
+    private ProgressDialog dialog;
 
-    public ReloadAsyncTask(ImageView img, ListView list, TextView title, ArrayList<String> searchArray, int counter, Context context){
+    public ReloadAsyncTask(ImageView img, ListView list, TextView title, ArrayList<String> searchArray, int counter, Context context, ProgressDialog dialog){
         this.img = img;
         this.list = list;
         this.title = title;
         this.searchArray = searchArray;
         this.counter = counter;
         this.context = context;
+        this.dialog = dialog;
         apiBinder = new APILoader();
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context).build();
+        ImageLoader.getInstance().init(config);
     }
 
     @Override
@@ -63,9 +69,6 @@ public class ReloadAsyncTask extends AsyncTask<String,String,String> {
 
         title.setText(titleText);
 
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context).build();
-        ImageLoader.getInstance().init(config);
-
         ImageLoader imageLoader = ImageLoader.getInstance();
         imageLoader.displayImage(imgText, img);
 
@@ -79,5 +82,6 @@ public class ReloadAsyncTask extends AsyncTask<String,String,String> {
         }
 
         list.setAdapter(ing_list);
+        dialog.dismiss();
     }
 }

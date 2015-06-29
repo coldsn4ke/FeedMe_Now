@@ -1,5 +1,6 @@
 package com.csoft.wong.feedmenow;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.app.ActionBar;
 import android.content.Intent;
@@ -71,7 +72,9 @@ public class MainActivity extends ActionBarActivity {
 
         Intent intent;
         intent = new Intent(getApplicationContext(), Recipe_Activity.class);
-        readSearchURLAsyncTask searchURLAsyncTask = new readSearchURLAsyncTask(intent, this, ing_list);
+        ProgressDialog dialog = ProgressDialog.show(this, "Loading", "Please wait...");
+        dialog.show();
+        readSearchURLAsyncTask searchURLAsyncTask = new readSearchURLAsyncTask(intent, this, ing_list, dialog);
         searchURLAsyncTask.execute();
 
     }

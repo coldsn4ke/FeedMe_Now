@@ -1,5 +1,6 @@
 package com.csoft.wong.feedmenow;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -13,11 +14,13 @@ public class readURLAsyncTask extends AsyncTask<String, String, String> {
     private Intent intent;
     private Context context;
     private ArrayList<String> searchArray;
+    private ProgressDialog dialog;
 
-    public readURLAsyncTask(Intent intent, Context context, ArrayList<String> searchArray){
+    public readURLAsyncTask(Intent intent, Context context, ArrayList<String> searchArray, ProgressDialog dialog){
         this.context = context;
         this.intent = intent;
         this.searchArray = searchArray;
+        this.dialog = dialog;
     }
 
     @Override
@@ -47,6 +50,7 @@ public class readURLAsyncTask extends AsyncTask<String, String, String> {
         intent.putExtra("href", allResults.get(Integer.toString(0)).get("resultHref"));
         intent.putStringArrayListExtra("RecipeIDs", searchArray);
         context.startActivity(intent);
+        dialog.dismiss();
         //((Activity)context).finish();
     }
 }
