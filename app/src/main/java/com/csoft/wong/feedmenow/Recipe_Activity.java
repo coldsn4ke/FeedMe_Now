@@ -1,12 +1,15 @@
 package com.csoft.wong.feedmenow;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -25,6 +28,7 @@ import java.util.ArrayList;
 
 public class Recipe_Activity extends ActionBarActivity {
 
+    private String url;
     private RelativeLayout mLayout;
     private float x1,x2;
     static final int MIN_DISTANCE = 50;
@@ -42,7 +46,7 @@ public class Recipe_Activity extends ActionBarActivity {
         String title = intent.getStringExtra("title");
         String[] ingredients = intent.getStringArrayExtra("ingredients");
         String thumbnail = intent.getStringExtra("thumbnail");
-        String href = intent.getStringExtra("href");
+        url = intent.getStringExtra("href");
         TextView titleView = (TextView) findViewById(R.id.recipe_name);
         titleView.setText(title);
         ImageView thumbnailView = (ImageView) findViewById(R.id.recipe_img);
@@ -51,6 +55,14 @@ public class Recipe_Activity extends ActionBarActivity {
 
         ArrayAdapter ing_list = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, ingredients);
         list.setAdapter(ing_list);
+    }
+
+    public void openLink(View v){
+
+        Uri uri = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
+
     }
 
     @Override

@@ -41,6 +41,7 @@
         android:text="Open"
         android:id="@+id/open_link"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:onClick="openLink" />
 
 </RelativeLayout>
