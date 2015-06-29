@@ -60,8 +60,10 @@ public class ReloadAsyncTask extends AsyncTask<String,String,String> {
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context).build();
         ImageLoader.getInstance().init(config);
 
-        ImageLoader imageLoader = ImageLoader.getInstance();
-        imageLoader.displayImage(imgText, img);
+        if (imgText != ""){
+            ImageLoader imageLoader = ImageLoader.getInstance();
+            imageLoader.displayImage(imgText, img);
+        }
 
         ArrayAdapter ing_list = new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1,ingredients);
         list.setAdapter(ing_list);

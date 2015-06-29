@@ -57,8 +57,11 @@ public class Recipe_Activity extends ActionBarActivity {
         titleView = (TextView) findViewById(R.id.recipe_name);
         titleView.setText(title);
         thumbnailView = (ImageView) findViewById(R.id.recipe_img);
-        ImageLoader imageLoader = ImageLoader.getInstance();
-        imageLoader.displayImage(thumbnail, thumbnailView);
+
+        if(thumbnail != ""){
+            ImageLoader imageLoader = ImageLoader.getInstance();
+            imageLoader.displayImage(thumbnail, thumbnailView);
+        }
 
         searchArray = intent.getStringArrayListExtra("RecipeIDs");
 
