@@ -1,8 +1,12 @@
 package com.csoft.wong.feedmenow;
 
+import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -35,17 +39,36 @@ public class readSearchURLAsyncTask extends AsyncTask<String, String, String>{
         String searchXml = apiBinder.readUrl(searchUrl);
         searchArray = apiBinder.parseSearchXml(searchXml);
 
-
-        String recipeUrl = "http://api.bigoven.com/recipe/"
-                + searchArray.get(0) +
-                "?api_key=dvx9vaCumPhsRn5nALtmp5wO196Av1f3";
-
-        return recipeUrl;
+        if (searchArray.get(0) != "error") {
+            String recipeUrl = "http://api.bigoven.com/recipe/"
+                    + searchArray.get(0) +
+                    "?api_key=dvx9vaCumPhsRn5nALtmp5wO196Av1f3";
+            return recipeUrl;
+        } else {
+            return "error";
+        }
     }
 
     protected void onPostExecute(String recipeUrl) {
-        readURLAsyncTask readURLAT = new readURLAsyncTask(this.intent, this.context, this.searchArray);
-        readURLAT.execute(recipeUrl);
+        if (recipeUrl != "error") {
+            readURLAsyncTask readURLAT = new readURLAsyncTask(this.intent, this.context, this.searchArray);
+            readURLAT.execute(recipeUrl);
+        } else {
+            new AlertDialog.Builder(context)
+                    .setTitle("Failure")
+                    .setMessage("We did not find what you were looking for...")
+                    /*.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // continue with delete
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // do nothing
+                        }
+                    })*/
+                    .show();
+        }
     }
 }
 

@@ -1,6 +1,7 @@
 package com.csoft.wong.feedmenow;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import org.w3c.dom.CharacterData;
 import org.w3c.dom.Document;
@@ -55,9 +56,14 @@ public class XMLHandler {
             Element titleLine = (Element) titleNode.item(0);
             String title = getCharacterDataFromElement(titleLine);
 
-            NodeList imgNode = xmlDocument.getElementsByTagName("ImageURL");
-            Element imgLine = (Element) imgNode.item(0);
-            String img = getCharacterDataFromElement(imgLine);
+            String img = "";
+            try {
+                NodeList imgNode = xmlDocument.getElementsByTagName("ImageURL");
+                Element imgLine = (Element) imgNode.item(0);
+                img = getCharacterDataFromElement(imgLine);
+            } catch (Exception e){
+                Log.v(TAG, e.toString());
+            }
 
             NodeList urlNode = xmlDocument.getElementsByTagName("WebURL");
             Element urlLine = (Element) urlNode.item(0);
@@ -65,12 +71,6 @@ public class XMLHandler {
 
 
             HashMap resultMap = new HashMap<String, HashMap<String, String>>();
-
-            /*HashMap header = new HashMap<String, String>();
-            header.put("title", "title");
-            header.put("version", "version");
-            header.put("href", "href");
-            resultMap.put("header", header);*/
 
             HashMap subResultMap = new HashMap<String, String>();
             subResultMap.put("title", title);
@@ -100,23 +100,27 @@ public class XMLHandler {
 
             NodeList nodes = xmlDocument.getElementsByTagName("RecipeInfo");
 
-            ArrayList<String> recipeIDs = new ArrayList<String>();
+            if (nodes.getLength() > 0) {
+                ArrayList<String> recipeIDs = new ArrayList<String>();
 
+                for (int i = 0; i < nodes.getLength(); i++) {
+                    Element element = (Element) nodes.item(i);
 
+                    NodeList name = element.getElementsByTagName("RecipeID");
 
-            // iterate the employees
-            for (int i = 0; i < nodes.getLength(); i++) {
-                Element element = (Element) nodes.item(i);
+                    Element nameLine = (Element) name.item(0);
 
-                NodeList name = element.getElementsByTagName("RecipeID");
+                    recipeIDs.add(getCharacterDataFromElement(nameLine));
+                }
 
-                Element nameLine = (Element) name.item(0);
+                return recipeIDs;
 
-                recipeIDs.add(getCharacterDataFromElement(nameLine));
+            } else {
+                ArrayList<String> errorList = new ArrayList<String>();
+                errorList.add("error");
+                return errorList;
             }
 
-
-            return recipeIDs;
 
 
         } catch (SAXParseException e){
