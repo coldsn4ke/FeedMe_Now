@@ -13,6 +13,7 @@ public class readSearchURLAsyncTask extends AsyncTask<String, String, String>{
     private Context context;
     private APIBinder apiBinder;
     private ArrayList ing_list;
+    private ArrayList<String> searchVector;
 
     public readSearchURLAsyncTask(Intent intent, Context context, ArrayList ing_list){
         this.context = context;
@@ -34,7 +35,7 @@ public class readSearchURLAsyncTask extends AsyncTask<String, String, String>{
         searchUrl += "&api_key=dvx9vaCumPhsRn5nALtmp5wO196Av1f3";
 
         String searchXml = apiBinder.readUrl(searchUrl);
-        Vector<String> searchVector = apiBinder.parseSearchXml(searchXml);
+        searchVector = apiBinder.parseSearchXml(searchXml);
 
 
         String recipeUrl = "http://api.bigoven.com/recipe/"
@@ -45,8 +46,12 @@ public class readSearchURLAsyncTask extends AsyncTask<String, String, String>{
     }
 
     protected void onPostExecute(String recipeUrl) {
-        readURLAsyncTask readURLAT = new readURLAsyncTask(this.intent, this.context);
+        readURLAsyncTask readURLAT = new readURLAsyncTask(this.intent, this.context, this.searchVector);
         readURLAT.execute(recipeUrl);
+    }
+
+    public ArrayList<String> getVector() {
+        return searchVector;
     }
 }
 

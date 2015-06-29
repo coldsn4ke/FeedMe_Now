@@ -5,17 +5,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Vector;
 
 
 public class readURLAsyncTask extends AsyncTask<String, String, String> {
 
     private Intent intent;
     private Context context;
+    private ArrayList<String> searchVector;
 
-    public readURLAsyncTask(Intent intent, Context context){
+    public readURLAsyncTask(Intent intent, Context context, ArrayList<String> searchVector){
         this.context = context;
         this.intent = intent;
+        this.searchVector = searchVector;
     }
 
     @Override
@@ -43,6 +47,7 @@ public class readURLAsyncTask extends AsyncTask<String, String, String> {
         intent.putExtra("ingredients", allResults.get(Integer.toString(0)).get("ingredients").split(", "));
         intent.putExtra("thumbnail", allResults.get(Integer.toString(0)).get("thumbnail"));
         intent.putExtra("href", allResults.get(Integer.toString(0)).get("resultHref"));
+        intent.putStringArrayListExtra("RecipeIDs", searchVector);
         context.startActivity(intent);
         //((Activity)context).finish();
     }
