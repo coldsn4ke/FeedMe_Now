@@ -12,6 +12,7 @@ import org.xml.sax.SAXParseException;
 
 import java.io.StringReader;
 import java.util.HashMap;
+import java.util.Vector;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -27,8 +28,6 @@ public class XMLHandler {
         //xmlDocument.createElement("myxml");
         try {
             Document xmlDocument = loadXMLFromString(xmlstring);
-
-            int counter = 0;
 
             NodeList nodes = xmlDocument.getElementsByTagName("Ingredient");
 
@@ -78,7 +77,7 @@ public class XMLHandler {
             subResultMap.put("resultHref", webURL);
             subResultMap.put("ingredients", ingredients);
             subResultMap.put("thumbnail", img);
-                resultMap.put(Integer.toString(counter++), subResultMap);
+                resultMap.put(Integer.toString(0), subResultMap);
 
             return resultMap;
 
@@ -92,6 +91,43 @@ public class XMLHandler {
         }
 
         return new HashMap<String, HashMap<String, String>>();
+    }
+
+
+    public Vector<String> parseSearchXml(String xmlstring){
+        try {
+            Document xmlDocument = loadXMLFromString(xmlstring);
+
+            NodeList nodes = xmlDocument.getElementsByTagName("RecipeInfo");
+
+            Vector<String> recipeIDs = new Vector<String>();
+
+
+
+            // iterate the employees
+            for (int i = 0; i < nodes.getLength(); i++) {
+                Element element = (Element) nodes.item(i);
+
+                NodeList name = element.getElementsByTagName("Name");
+
+                Element nameLine = (Element) name.item(0);
+
+                recipeIDs.add(getCharacterDataFromElement(nameLine));
+            }
+
+
+            return recipeIDs;
+
+
+        } catch (SAXParseException e){
+            Log.v(TAG, Integer.toString(e.getColumnNumber()));
+            Log.v(TAG, Integer.toString(e.getLineNumber()));
+
+        } catch (Exception e){
+            Log.v(TAG, e.toString());
+        }
+
+        return new Vector<String>();
     }
 
 

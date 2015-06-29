@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Vector;
 
 
 /*
@@ -67,15 +68,25 @@ public class MainActivity extends ActionBarActivity {
             }
         }
 
-        String url = "http://api.bigoven.com/recipe/1185708?api_key=dvx9vaCumPhsRn5nALtmp5wO196Av1f3";
-        /*String url = "http://www.recipepuppy.com/api/?i=";
+        String searchUrl = "http://api.bigoven.com/recipes?pg=1&rpp=25&title_kw=";
         for (int i = 0; i < ing_list.size(); i++){
             if (i == 0) {
-                url += ing_list.get(i).toString();
+                searchUrl += ing_list.get(i).toString();
             } else {
-                url += "," + ing_list.get(i).toString();
+                searchUrl += "," + ing_list.get(i).toString();
             }
-        }*/
+        }
+        searchUrl += "&api_key=dvx9vaCumPhsRn5nALtmp5wO196Av1f3";
+
+        String searchXml = apiBinder.readUrl("http://api.bigoven.com/recipes?pg=1&rpp=25&title_kw=cheese,fondue,garlic&api_key=dvx9vaCumPhsRn5nALtmp5wO196Av1f3");
+        Vector<String> searchVector = apiBinder.parseSearchXml(searchXml);
+
+
+        String url = "http://api.bigoven.com/recipe/"
+                + searchVector.get(0) +
+                "?api_key=dvx9vaCumPhsRn5nALtmp5wO196Av1f3";
+
+
 
         Intent intent;
         intent = new Intent(getApplicationContext(), Recipe_Activity.class);
