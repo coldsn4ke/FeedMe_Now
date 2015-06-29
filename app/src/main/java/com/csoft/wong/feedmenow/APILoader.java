@@ -6,10 +6,12 @@ import java.util.HashMap;
 public class APILoader implements APIBinder {
     URLHandler urlHandler;
     JSONHandler jsonHandler;
+    XMLHandler xmlHandler;
 
     public APILoader(){
         this.urlHandler = new URLHandler();
         this.jsonHandler = new JSONHandler();
+        this.xmlHandler = new XMLHandler();
     }
 
     public String readUrl(String url){
@@ -18,6 +20,10 @@ public class APILoader implements APIBinder {
 
     public HashMap<String, HashMap<String, String>> parseJson(String jsonstring){
         return this.jsonHandler.parseJson(jsonstring);
+    }
+
+    public HashMap<String, HashMap<String, String>> parseXml(String xmlstring){
+        return this.xmlHandler.parseXml(xmlstring);
     }
 
 }

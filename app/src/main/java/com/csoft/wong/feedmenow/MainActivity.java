@@ -21,6 +21,15 @@ import java.util.HashMap;
 import java.util.ArrayList;
 
 
+/*
+Get Search result
+http://api.bigoven.com/recipes?pg=1&rpp=25&title_kw=cheese,fondue,garlic&api_key=dvx9vaCumPhsRn5nALtmp5wO196Av1f3
+
+Get Recipe
+http://api.bigoven.com/recipe/1185708?api_key=dvx9vaCumPhsRn5nALtmp5wO196Av1f3
+ */
+
+
 public class MainActivity extends ActionBarActivity {
 
     private RelativeLayout mLayout;
@@ -58,27 +67,31 @@ public class MainActivity extends ActionBarActivity {
             }
         }
 
-
-        String url = "http://www.recipepuppy.com/api/?i=";
+        String url = "http://api.bigoven.com/recipe/1185708?api_key=dvx9vaCumPhsRn5nALtmp5wO196Av1f3";
+        /*String url = "http://www.recipepuppy.com/api/?i=";
         for (int i = 0; i < ing_list.size(); i++){
             if (i == 0) {
                 url += ing_list.get(i).toString();
             } else {
                 url += "," + ing_list.get(i).toString();
             }
-        }
+        }*/
 
         new AsyncTask<String, String, String>(){
             @Override
             protected String doInBackground(String... url) {
                 APIBinder apiBinder = new APILoader();
+                /*
                 String jsonstring = apiBinder.readUrl(url[0]);
                 return jsonstring;
+                */
+                String xmlstring = apiBinder.readUrl(url[0]);
+                return xmlstring;
             }
 
-            protected void onPostExecute(String jsonstring) {
+            protected void onPostExecute(String xmlstring) {
                 APIBinder apiBinder = new APILoader();
-                HashMap<String, HashMap<String, String>> allResults = apiBinder.parseJson(jsonstring);
+                HashMap<String, HashMap<String, String>> allResults = apiBinder.parseXml(xmlstring);
 
                 /*ArrayList ing_list = new ArrayList();
                 for (int i = 0; i < allResults.size()-1;i++){
