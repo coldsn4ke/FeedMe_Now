@@ -108,7 +108,7 @@ public class XMLHandler {
             for (int i = 0; i < nodes.getLength(); i++) {
                 Element element = (Element) nodes.item(i);
 
-                NodeList name = element.getElementsByTagName("Name");
+                NodeList name = element.getElementsByTagName("RecipeID");
 
                 Element nameLine = (Element) name.item(0);
 

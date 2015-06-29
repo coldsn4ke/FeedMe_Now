@@ -49,6 +49,7 @@ public class MainActivity extends ActionBarActivity {
         add_ing = (Button) findViewById(R.id.add_ing);
         edit = (EditText) findViewById(R.id.ing0);
         count = 0;
+        apiBinder = new APILoader();
     }
 
 
@@ -68,30 +69,10 @@ public class MainActivity extends ActionBarActivity {
             }
         }
 
-        String searchUrl = "http://api.bigoven.com/recipes?pg=1&rpp=25&title_kw=";
-        for (int i = 0; i < ing_list.size(); i++){
-            if (i == 0) {
-                searchUrl += ing_list.get(i).toString();
-            } else {
-                searchUrl += "," + ing_list.get(i).toString();
-            }
-        }
-        searchUrl += "&api_key=dvx9vaCumPhsRn5nALtmp5wO196Av1f3";
-
-        String searchXml = apiBinder.readUrl("http://api.bigoven.com/recipes?pg=1&rpp=25&title_kw=cheese,fondue,garlic&api_key=dvx9vaCumPhsRn5nALtmp5wO196Av1f3");
-        Vector<String> searchVector = apiBinder.parseSearchXml(searchXml);
-
-
-        String url = "http://api.bigoven.com/recipe/"
-                + searchVector.get(0) +
-                "?api_key=dvx9vaCumPhsRn5nALtmp5wO196Av1f3";
-
-
-
         Intent intent;
         intent = new Intent(getApplicationContext(), Recipe_Activity.class);
-        readURLAsyncTask urlAsyncTask = new readURLAsyncTask(intent, this);
-        urlAsyncTask.execute(url);
+        readSearchURLAsyncTask searchURLAsyncTask = new readSearchURLAsyncTask(intent, this, ing_list);
+        searchURLAsyncTask.execute();
 
     }
 
