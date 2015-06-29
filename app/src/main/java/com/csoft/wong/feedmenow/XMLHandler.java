@@ -39,30 +39,45 @@ public class XMLHandler {
                 Element element = (Element) nodes.item(i);
 
                 NodeList name = element.getElementsByTagName("Name");
-                Element line = (Element) name.item(0);
+                NodeList metricQ = element.getElementsByTagName("MetricDisplayQuantity");
+                NodeList metricU = element.getElementsByTagName("MetricUnit");
+
+                Element nameLine = (Element) name.item(0);
+                Element metricQline = (Element) metricQ.item(0);
+                Element metricUline = (Element) metricU.item(0);
                 if(i== 0){
-                    ingredients = ingredients +getCharacterDataFromElement(line);
+                    ingredients = ingredients + getCharacterDataFromElement(metricQline) + " " + getCharacterDataFromElement(metricUline) + "   " + getCharacterDataFromElement(nameLine);
                 }else{
-                    ingredients = ingredients + ", " +getCharacterDataFromElement(line);
+                    ingredients = ingredients + ", " + getCharacterDataFromElement(metricQline) + " " + getCharacterDataFromElement(metricUline) + "   "  +getCharacterDataFromElement(nameLine);
                 }
-
-
             }
+
+            NodeList titleNode = xmlDocument.getElementsByTagName("Title");
+            Element titleLine = (Element) titleNode.item(0);
+            String title = getCharacterDataFromElement(titleLine);
+
+            NodeList imgNode = xmlDocument.getElementsByTagName("ImageURL");
+            Element imgLine = (Element) imgNode.item(0);
+            String img = getCharacterDataFromElement(imgLine);
+
+            NodeList urlNode = xmlDocument.getElementsByTagName("WebURL");
+            Element urlLine = (Element) urlNode.item(0);
+            String webURL = getCharacterDataFromElement(urlLine);
 
 
             HashMap resultMap = new HashMap<String, HashMap<String, String>>();
 
-            HashMap header = new HashMap<String, String>();
+            /*HashMap header = new HashMap<String, String>();
             header.put("title", "title");
             header.put("version", "version");
             header.put("href", "href");
-            resultMap.put("header", header);
+            resultMap.put("header", header);*/
 
             HashMap subResultMap = new HashMap<String, String>();
-            subResultMap.put("title", "title");
-            subResultMap.put("resultHref", "resultHref");
+            subResultMap.put("title", title);
+            subResultMap.put("resultHref", webURL);
             subResultMap.put("ingredients", ingredients);
-            subResultMap.put("thumbnail", "thumbnail");
+            subResultMap.put("thumbnail", img);
                 resultMap.put(Integer.toString(counter++), subResultMap);
 
             return resultMap;
