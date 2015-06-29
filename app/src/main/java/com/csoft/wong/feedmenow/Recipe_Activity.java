@@ -29,29 +29,38 @@ import java.util.ArrayList;
 public class Recipe_Activity extends ActionBarActivity {
 
     private String url;
+    private ArrayList<String> searchArray;
     private RelativeLayout mLayout;
     private float x1,x2;
     static final int MIN_DISTANCE = 50;
+    private int counter;
+    private ListView list;
+    private TextView titleView;
+    private ImageView thumbnailView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        counter = 1;
+
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
         ImageLoader.getInstance().init(config);
 
         setContentView(R.layout.activity_recipe_);
-        ListView list = (ListView) findViewById(R.id.recipe_list);
+        list = (ListView) findViewById(R.id.recipe_list);
         Intent intent = getIntent();
         String title = intent.getStringExtra("title");
         String[] ingredients = intent.getStringArrayExtra("ingredients");
         String thumbnail = intent.getStringExtra("thumbnail");
         url = intent.getStringExtra("href");
-        TextView titleView = (TextView) findViewById(R.id.recipe_name);
+        titleView = (TextView) findViewById(R.id.recipe_name);
         titleView.setText(title);
-        ImageView thumbnailView = (ImageView) findViewById(R.id.recipe_img);
+        thumbnailView = (ImageView) findViewById(R.id.recipe_img);
         ImageLoader imageLoader = ImageLoader.getInstance();
         imageLoader.displayImage(thumbnail, thumbnailView);
+
+        searchArray = intent.getStringArrayListExtra("RecipeIDs");
 
         ArrayAdapter ing_list = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, ingredients);
         list.setAdapter(ing_list);
@@ -105,6 +114,8 @@ public class Recipe_Activity extends ActionBarActivity {
                     if (x2 > x1)
                     {
                         Toast.makeText(this, "Left to Right swipe [Next]", Toast.LENGTH_SHORT).show ();
+                        new ReloadAsyncTask(thumbnailView,list,titleView,searchArray,counter,this).execute();
+                        counter++;
                     }
 
                     // Right to left swipe action
