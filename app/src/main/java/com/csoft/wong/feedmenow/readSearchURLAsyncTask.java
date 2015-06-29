@@ -5,15 +5,13 @@ import android.content.Intent;
 import android.os.AsyncTask;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Vector;
 
 public class readSearchURLAsyncTask extends AsyncTask<String, String, String>{
     private Intent intent;
     private Context context;
     private APIBinder apiBinder;
     private ArrayList ing_list;
-    private ArrayList<String> searchVector;
+    private ArrayList<String> searchArray;
 
     public readSearchURLAsyncTask(Intent intent, Context context, ArrayList ing_list){
         this.context = context;
@@ -35,23 +33,19 @@ public class readSearchURLAsyncTask extends AsyncTask<String, String, String>{
         searchUrl += "&api_key=dvx9vaCumPhsRn5nALtmp5wO196Av1f3";
 
         String searchXml = apiBinder.readUrl(searchUrl);
-        searchVector = apiBinder.parseSearchXml(searchXml);
+        searchArray = apiBinder.parseSearchXml(searchXml);
 
 
         String recipeUrl = "http://api.bigoven.com/recipe/"
-                + searchVector.get(0) +
+                + searchArray.get(0) +
                 "?api_key=dvx9vaCumPhsRn5nALtmp5wO196Av1f3";
 
         return recipeUrl;
     }
 
     protected void onPostExecute(String recipeUrl) {
-        readURLAsyncTask readURLAT = new readURLAsyncTask(this.intent, this.context, this.searchVector);
+        readURLAsyncTask readURLAT = new readURLAsyncTask(this.intent, this.context, this.searchArray);
         readURLAT.execute(recipeUrl);
-    }
-
-    public ArrayList<String> getVector() {
-        return searchVector;
     }
 }
 
