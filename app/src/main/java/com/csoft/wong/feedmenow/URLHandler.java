@@ -53,6 +53,8 @@ public class URLHandler {
             }
         }
 
-        return contents.toString();
+        String validContents = contents.toString();
+        validContents = validContents.replace("null","");
+        return validContents;
     }
 }
