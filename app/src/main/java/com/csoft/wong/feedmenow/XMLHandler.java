@@ -11,8 +11,8 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXParseException;
 
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Vector;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -94,13 +94,13 @@ public class XMLHandler {
     }
 
 
-    public Vector<String> parseSearchXml(String xmlstring){
+    public ArrayList<String> parseSearchXml(String xmlstring){
         try {
             Document xmlDocument = loadXMLFromString(xmlstring);
 
             NodeList nodes = xmlDocument.getElementsByTagName("RecipeInfo");
 
-            Vector<String> recipeIDs = new Vector<String>();
+            ArrayList<String> recipeIDs = new ArrayList<String>();
 
 
 
@@ -127,7 +127,7 @@ public class XMLHandler {
             Log.v(TAG, e.toString());
         }
 
-        return new Vector<String>();
+        return new ArrayList<String>();
     }
 
 
