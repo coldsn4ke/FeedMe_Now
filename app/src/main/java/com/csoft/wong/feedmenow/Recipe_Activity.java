@@ -60,6 +60,8 @@ public class Recipe_Activity extends ActionBarActivity {
         thumbnailView = (ImageView) findViewById(R.id.recipe_img);
 
 
+        this.thumbnailView.setImageResource(R.drawable.loading_image);
+
         ImageLoader imageLoader = ImageLoader.getInstance();
         imageLoader.displayImage(thumbnail, thumbnailView);
 
