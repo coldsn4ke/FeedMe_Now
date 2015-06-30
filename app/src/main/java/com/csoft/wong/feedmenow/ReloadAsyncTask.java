@@ -69,6 +69,8 @@ public class ReloadAsyncTask extends AsyncTask<String,String,String> {
 
         title.setText(titleText);
 
+        this.img.setImageResource(R.drawable.loading_image);
+
         ImageLoader imageLoader = ImageLoader.getInstance();
         imageLoader.displayImage(imgText, img);
 
