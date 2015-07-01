@@ -8,4 +8,6 @@
     <string name="search">Search</string>
     <string name="add">+</string>
     <string name="title_activity_recipe_">Recipe</string>
+    <string name="action_favourites">Favourites</string>
+    <string name="title_activity_favourites_">Favourites</string>
 </resources>

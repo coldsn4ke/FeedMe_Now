@@ -7,6 +7,7 @@ import android.hardware.SensorManager;
 import android.os.AsyncTask;
 import android.app.ActionBar;
 import android.content.Intent;
+import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.InputType;
@@ -21,6 +22,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Vector;
@@ -52,6 +56,20 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        File favouritesTest = new File("/sdcard/feedmenow/favourites.txt");
+        if(favouritesTest.exists()) {
+        }else{
+            File feedmenowDir = new File("/sdcard/feedmenow/");
+            feedmenowDir.mkdir();
+            File favourites = new File(feedmenowDir, "favourites.txt");
+            try {
+                FileOutputStream fos = new FileOutputStream(favourites);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
         setContentView(R.layout.activity_main);
         mLayout = (RelativeLayout) findViewById(R.id.ing_list);
         add_ing = (Button) findViewById(R.id.add_ing);
@@ -138,25 +156,28 @@ public class MainActivity extends ActionBarActivity {
         return editText;
     }
 
+    private void openFavourites(){
+        Intent intent = new Intent(this,Favourites_Activity.class);
+        startActivity(intent);
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.global, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.action_favourites:
+                openFavourites();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 }

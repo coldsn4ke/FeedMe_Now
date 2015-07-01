@@ -1,10 +1,12 @@
 package com.csoft.wong.feedmenow;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -23,7 +25,13 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 
-
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 
 
@@ -128,7 +136,10 @@ public class Recipe_Activity extends ActionBarActivity {
                     // Right to left swipe action
                     else
                     {
-                        Toast.makeText(this, "Right to Left swipe [Previous]", Toast.LENGTH_SHORT).show ();
+                        Toast.makeText(this, "Recipe saving...", Toast.LENGTH_SHORT).show ();
+                        writeToFile(searchArray.get(counter).toString() + ";");
+                        Toast.makeText(this, "Recipe saved", Toast.LENGTH_SHORT).show();
+
                     }
 
                 }
@@ -139,5 +150,20 @@ public class Recipe_Activity extends ActionBarActivity {
                 break;
         }
         return super.onTouchEvent(event);
+    }
+
+    private void writeToFile(String data) {
+        try {
+
+            File favouritesDir = new File("/sdcard/feedmenow/");
+            File favourites = new File(favouritesDir,"favourites.txt");
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("/sdcard/feedmenow/favourites.txt", true)));
+            out.print(data);
+            out.flush();
+            out.close();
+        }
+        catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
     }
 }
