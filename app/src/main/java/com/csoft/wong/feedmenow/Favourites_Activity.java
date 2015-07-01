@@ -4,15 +4,19 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 
 public class Favourites_Activity extends ActionBarActivity {
+
+    private ListView favList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favourites_);
-
+        favList = (ListView) findViewById(R.id.favList);
+        new favouritesURLAsyncTask(this,favList).execute();
     }
 
     @Override
