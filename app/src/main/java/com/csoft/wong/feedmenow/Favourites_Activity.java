@@ -1,15 +1,23 @@
 package com.csoft.wong.feedmenow;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import java.util.HashMap;
 
 
 public class Favourites_Activity extends ActionBarActivity {
 
     private ListView favList;
+    protected HashMap<String, String> hrefList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +25,7 @@ public class Favourites_Activity extends ActionBarActivity {
         setContentView(R.layout.activity_favourites_);
         favList = (ListView) findViewById(R.id.favList);
         new favouritesURLAsyncTask(this,favList).execute();
+        hrefList = new HashMap<String, String>();
     }
 
     @Override
@@ -40,4 +49,21 @@ public class Favourites_Activity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    AdapterView.OnItemClickListener myListClickedHandler = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView parent, View view, int position, long id) {
+
+            String selected = parent.getItemAtPosition(position).toString();
+
+            String url = hrefList.get(selected);
+
+            Uri uri = Uri.parse(url);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
+
+        }
+
+    };
+
 }
