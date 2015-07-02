@@ -67,7 +67,7 @@ public class readSearchURLAsyncTask extends AsyncTask<String, String, String>{
                             // continue with delete
                         }
                     })
-                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {u
                         public void onClick(DialogInterface dialog, int which) {
                             // do nothing
                         }
