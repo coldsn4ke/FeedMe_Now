@@ -8,18 +8,19 @@ import android.widget.ListView;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Scanner;
 
-/**
- * Created by bwongc on 01.07.2015.
- */
+
 public class favouritesURLAsyncTask extends AsyncTask<Void,Void,ArrayList<String>> {
 
-    private Context context;
+    private Favourites_Activity context;
 
     private ListView favList;
 
-    public favouritesURLAsyncTask(Context context, ListView favList){
+    public favouritesURLAsyncTask(Favourites_Activity context, ListView favList){
         this.context = context;
         this.favList = favList;
     }
@@ -45,16 +46,42 @@ public class favouritesURLAsyncTask extends AsyncTask<Void,Void,ArrayList<String
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        return strBuff;
+
+        //return strBuff;
+
+        context.hrefList = new HashMap<String, String>();
+
+        for (int i = 0; i < strBuff.size(); i++) {
+            APIBinder apiBinder = new APILoader();
+            String xmlstring = apiBinder.readUrl(
+                    "http://api.bigoven.com/recipe/"+
+                            strBuff.get(i)+
+                            "?api_key=dvx9vaCumPhsRn5nALtmp5wO196Av1f3"
+            );
+            HashMap<String, HashMap<String, String>> allResults = apiBinder.parseXml(xmlstring);
+
+            context.hrefList.put(
+                    allResults.get(Integer.toString(0)).get("title"),
+                    allResults.get(Integer.toString(0)).get("resultHref")
+            );
+
+        }
+
+        ArrayList<String> titleList = new ArrayList<String>();
+        Iterator it = context.hrefList.entrySet().iterator();
+        while (it.hasNext()){
+            HashMap.Entry pair = (HashMap.Entry)it.next();
+            titleList.add(pair.getKey().toString());
+        }
+
+        return titleList;
     }
 
     protected void onPostExecute(ArrayList<String> strBuff) {
 
-        String[] favString = new String[strBuff.size()];
-        favString = strBuff.toArray(favString);
-
         ArrayAdapter favListAdapter = new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1, strBuff);
         favList.setAdapter(favListAdapter);
+        favList.setOnItemClickListener(context.myListClickedHandler);
 
     }
 

@@ -26,10 +26,6 @@ public class readURLAsyncTask extends AsyncTask<String, String, String> {
     @Override
     protected String doInBackground(String... url) {
         APIBinder apiBinder = new APILoader();
-        /*
-        String jsonstring = apiBinder.readUrl(url[0]);
-        return jsonstring;
-        */
         String xmlstring = apiBinder.readUrl(url[0]);
         return xmlstring;
     }
