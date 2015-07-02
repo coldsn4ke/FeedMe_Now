@@ -1,5 +1,6 @@
 package com.csoft.wong.feedmenow;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.ArrayAdapter;
@@ -20,9 +21,12 @@ public class favouritesURLAsyncTask extends AsyncTask<Void,Void,ArrayList<String
 
     private ListView favList;
 
-    public favouritesURLAsyncTask(Favourites_Activity context, ListView favList){
+    private ProgressDialog dialog;
+
+    public favouritesURLAsyncTask(Favourites_Activity context, ListView favList, ProgressDialog dialog){
         this.context = context;
         this.favList = favList;
+        this.dialog = dialog;
     }
 
     @Override
@@ -82,6 +86,7 @@ public class favouritesURLAsyncTask extends AsyncTask<Void,Void,ArrayList<String
         ArrayAdapter favListAdapter = new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1, strBuff);
         favList.setAdapter(favListAdapter);
         favList.setOnItemClickListener(context.myListClickedHandler);
+        dialog.dismiss();
 
     }
 

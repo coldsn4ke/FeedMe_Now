@@ -1,5 +1,6 @@
 package com.csoft.wong.feedmenow;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
@@ -24,7 +25,9 @@ public class Favourites_Activity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favourites_);
         favList = (ListView) findViewById(R.id.favList);
-        new favouritesURLAsyncTask(this,favList).execute();
+        ProgressDialog dialog = ProgressDialog.show(this, "Loading", "Please wait...");
+        dialog.show();
+        new favouritesURLAsyncTask(this,favList,dialog).execute();
         hrefList = new HashMap<String, String>();
     }
 
